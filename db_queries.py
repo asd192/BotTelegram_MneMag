@@ -2,10 +2,9 @@
 import pymysql
 
 
-def log_errors(message_error):
-    # TODO не работает
+def log_errors(message_error="неизвестно"):
     with open("db_queries.log", "a", encoding="UTF8") as dbq_log:
-        dbq_log.write(f'{datetime.datetime.now()} - {message_error}\n')
+        dbq_log.write(f'{datetime.datetime.now()} - {message_error}')
 
 
 try:
@@ -52,4 +51,4 @@ def link_shops_read_db(call_data='Мегамаркеты'):
 
 
 if __name__ == '__main__':
-    print(link_shops_read())
+    print(link_shops_read_db())

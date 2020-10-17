@@ -10,7 +10,7 @@ try:
         token = token.readlines()[2].strip()
 except:
     log_errors("Не могу получить доступ к файлу для получения токена")
-    
+
 bot = telebot.TeleBot(token)
 
 
