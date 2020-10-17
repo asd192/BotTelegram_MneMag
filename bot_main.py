@@ -1,17 +1,22 @@
 import telebot
 from telebot import types
-from db_queries import link_shops_read
+
+from db_queries import link_shops_read_db
+from db_queries import log_errors
 
 # добываем токен
-with open("API-Token.txt", "r", encoding="UTF8") as token:
-    token = token.readlines()[2].strip()
-
+try:
+    with open("API-Token.txt", "r", encoding="UTF8") as token:
+        token = token.readlines()[2].strip()
+except:
+    log_errors("Не могу получить доступ к файлу для получения токена")
+    
 bot = telebot.TeleBot(token)
 
 
 @bot.message_handler(commands=['start'])
 def menu_down(message):
-    """крафт и отправка нижнего меню"""
+    """Крафт и отправка нижнего меню"""
     keyboard_down = types.ReplyKeyboardMarkup(True, False)
 
     keyboard_down.row('Магазины')
@@ -23,7 +28,7 @@ def menu_down(message):
 
 @bot.message_handler(content_types=['text'])
 def get_menu_shops(message):
-    """крафт и отправка чат-меню"""
+    """Крафт и отправка чат-меню"""
     if message.text == 'Магазины':
 
         shops_dict = {
@@ -83,7 +88,7 @@ def get_menu_shops(message):
 def callback_inline(call):
     """Если сообщение поступило из чата с ботом, запросить ссылки"""
     if call.message:
-        shop_urls = link_shops_read(call.data)
+        shop_urls = link_shops_read_db(call.data)
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=shop_urls)
 

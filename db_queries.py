@@ -25,7 +25,7 @@ except:
     log_errors("Не удалось подключиться к БД\n")
 
 
-def link_shops_read(call_data='Мегамаркеты'):
+def link_shops_read_db(call_data='Мегамаркеты'):
     """запрос ссылок магазинов из БД"""
     try:
         with connect.cursor() as cursor:
