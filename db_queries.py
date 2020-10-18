@@ -19,9 +19,9 @@ try:
         charset=param_db[4],
         cursorclass=pymysql.cursors.DictCursor
     )
-    log_errors("успешное подключение к БД\n")
+    log_errors("code-10: успешное подключение к БД\n")
 except:
-    log_errors("не удалось подключиться к БД\n")
+    log_errors("code-40: не удалось подключиться к БД\n")
 
 
 def link_shops_read_db(call_data='Мегамаркеты'):
@@ -41,13 +41,14 @@ def link_shops_read_db(call_data='Мегамаркеты'):
                 is_deleted IS null AND
                 is_private = 0
             ORDER BY RAND()
-            LIMIT 1
+            /*LIMIT 3*/
             """
             cursor.execute(sql_shops, call_data)
-        url = [row['url'] for row in cursor]
+
+        url = ', '.join([row['url'] for row in cursor])
         return url
     except:
-        log_errors("неудачный запрос ссылок\n")
+        log_errors("code-43: неудачный запрос ссылок\n")
 
 
 if __name__ == '__main__':

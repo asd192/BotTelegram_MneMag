@@ -25,7 +25,10 @@ def menu_down(message):
 
     bot.send_message(message.chat.id, "Выбирай кнопки внизу.", reply_markup=keyboard_down)
 
+
 help_message = "Смотри что умею.\n\n/start - вернуться в начало\nМагазины - покажу меню магазинов\nНа сайт - ссылка на сайт\n/help - помощь"
+
+
 @bot.message_handler(commands=['help'])
 def help(message):
     bot.send_message(message.chat.id, help_message)
@@ -93,6 +96,7 @@ def get_menu_shops(message):
 def callback_inline(call):
     """Если сообщение поступило из чата с ботом, запросить ссылки"""
     if call.message:
+        log_errors(f"code-20: запрошена категория <{call.data}>")
         shop_urls = link_shops_read_db(call.data)
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=shop_urls)
