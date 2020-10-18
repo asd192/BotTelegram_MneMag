@@ -41,7 +41,7 @@ def link_shops_read_db(call_data='Мегамаркеты'):
                 is_deleted IS null AND
                 is_private = 0
             ORDER BY RAND()
-            LIMIT 5
+            LIMIT 1
             """
             cursor.execute(sql_shops, call_data)
         url = [row['url'] for row in cursor]

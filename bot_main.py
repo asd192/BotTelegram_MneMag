@@ -35,7 +35,7 @@ def help(message):
 def get_menu_shops(message):
     """Крафт и отправка чат-меню"""
     msg_txt = str(message.text).lower()
-    if msg_txt == 'магазины':
+    if msg_txt in 'магазины':
         shops_dict = {
             'Детские': 'Детские',
             'Дом\Сад\Дача': 'Для дома и сада',
@@ -74,7 +74,7 @@ def get_menu_shops(message):
         # отправляем кнопки пользователю
         bot.send_message(message.from_user.id, text='Выбирай категорию', reply_markup=keyboard_shops)
 
-    if msg_txt == 'сайт':
+    if msg_txt in 'на сайт':
         # выбираем тип клавиатуры
         keyboard_site = types.InlineKeyboardMarkup()
 
@@ -85,7 +85,7 @@ def get_menu_shops(message):
         # отправляем кнопку пользователю
         bot.send_message(message.chat.id, "Нажми на кнопку для перехода на сайт", reply_markup=keyboard_site)
 
-    if msg_txt not in ['магазины', 'сайт']:
+    if msg_txt not in 'магазины' and msg_txt not in 'на сайт':
         bot.send_message(message.chat.id, help_message)
 
 
