@@ -20,17 +20,22 @@ def menu_down(message):
     keyboard_down = types.ReplyKeyboardMarkup(True, False)
 
     keyboard_down.row('Магазины')
-    keyboard_down.row('На сайт')
+    keyboard_down.row('Сайт')
     keyboard_down.row('Помощь')
 
-    bot.send_message(message.chat.id, "Привет. Выбирай.", reply_markup=keyboard_down)
+    bot.send_message(message.chat.id, "Выбирай кнопки внизу.", reply_markup=keyboard_down)
+
+help_message = "Смотри что умею.\n\n/start - вернуться в начало\nМагазины - покажу меню магазинов\nНа сайт - ссылка на сайт\n/help - помощь"
+@bot.message_handler(commands=['help'])
+def help(message):
+    bot.send_message(message.chat.id, help_message)
 
 
 @bot.message_handler(content_types=['text'])
 def get_menu_shops(message):
     """Крафт и отправка чат-меню"""
-    if message.text == 'Магазины':
-
+    msg_txt = str(message.text).lower()
+    if msg_txt == 'магазины':
         shops_dict = {
             'Детские': 'Детские',
             'Дом\Сад\Дача': 'Для дома и сада',
@@ -69,19 +74,19 @@ def get_menu_shops(message):
         # отправляем кнопки пользователю
         bot.send_message(message.from_user.id, text='Выбирай категорию', reply_markup=keyboard_shops)
 
-    if message.text == 'На сайт':
+    if msg_txt == 'сайт':
         # выбираем тип клавиатуры
         keyboard_site = types.InlineKeyboardMarkup()
 
         # крафтим кнопоку
-        key_url_main = types.InlineKeyboardButton(text='MneMag.ru', url='https://mnemag.ru')
+        key_url_main = types.InlineKeyboardButton(text='MneMag.ru', url='https://mnemag.ru/shop')
         keyboard_site.add(key_url_main)
 
         # отправляем кнопку пользователю
         bot.send_message(message.chat.id, "Нажми на кнопку для перехода на сайт", reply_markup=keyboard_site)
 
-    if message.text == 'Помощь':
-        bot.send_message(message.chat.id, "Магазины - меню магазинов\nНа сайт - ссылка на сайт\nПомощь - помощь")
+    if msg_txt not in ['магазины', 'сайт']:
+        bot.send_message(message.chat.id, help_message)
 
 
 @bot.callback_query_handler(func=lambda call: True)

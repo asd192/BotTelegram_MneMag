@@ -1,0 +1,7 @@
+API-Token.txt
+.idea
+Pipfile
+Pipfile.lock
+test.py
+test2.py
+database_access.txt

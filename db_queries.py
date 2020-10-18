@@ -19,9 +19,9 @@ try:
         charset=param_db[4],
         cursorclass=pymysql.cursors.DictCursor
     )
-    log_errors("Успешное подключение к БД\n")
+    log_errors("успешное подключение к БД\n")
 except:
-    log_errors("Не удалось подключиться к БД\n")
+    log_errors("не удалось подключиться к БД\n")
 
 
 def link_shops_read_db(call_data='Мегамаркеты'):
@@ -47,7 +47,7 @@ def link_shops_read_db(call_data='Мегамаркеты'):
         url = [row['url'] for row in cursor]
         return url
     except:
-        log_errors("Неудачный запрос ссылок\n")
+        log_errors("неудачный запрос ссылок\n")
 
 
 if __name__ == '__main__':
