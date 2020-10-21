@@ -3,7 +3,7 @@ import pymysql
 
 
 def log_message(message_error="неизвестно"):
-    with open("db_queries.log", "a", encoding="UTF8") as dbq_log:
+    with open("messages.log", "a", encoding="UTF8") as dbq_log:
         dbq_log.write(f'{datetime.datetime.now()} - {message_error}')
 
 
