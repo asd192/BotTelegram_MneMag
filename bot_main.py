@@ -2,14 +2,14 @@ import telebot
 from telebot import types
 
 from db_queries import link_shops_read_db
-from db_queries import log_errors
+from db_queries import log_message
 
 # добываем токен
 try:
     with open("API-Token.txt", "r", encoding="UTF8") as token:
         token = token.readlines()[2].strip()
 except:
-    log_errors("Не могу получить доступ к файлу для получения токена")
+    log_message("code-42: нет доступа к файлу API-Token.txt\n")
 
 bot = telebot.TeleBot(token)
 
@@ -32,6 +32,7 @@ help_message = "Смотри что умею.\n\n/start - вернуться в 
 @bot.message_handler(commands=['help'])
 def help(message):
     bot.send_message(message.chat.id, help_message)
+    log_message("code-22: запрошена ПОМОЩЬ\n")
 
 
 @bot.message_handler(content_types=['text'])
@@ -87,6 +88,7 @@ def get_menu_shops(message):
 
         # отправляем кнопку пользователю
         bot.send_message(message.chat.id, "Нажми на кнопку для перехода на сайт", reply_markup=keyboard_site)
+        log_message("code-21: запрошена ССЫЛКА сайта\n")
 
     if msg_txt not in 'магазины' and msg_txt not in 'на сайт':
         bot.send_message(message.chat.id, help_message)
@@ -94,9 +96,9 @@ def get_menu_shops(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
-    """Если сообщение поступило из чата с ботом, запросить ссылки"""
+    # Если сообщение поступило из чата с ботом
     if call.message:
-        log_errors(f"code-20: запрошена категория <{call.data}>")
+        log_message(f"code-20: запрошена категория <{call.data}>\n")
         shop_urls = link_shops_read_db(call.data)
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=shop_urls)

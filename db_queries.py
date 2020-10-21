@@ -2,7 +2,7 @@
 import pymysql
 
 
-def log_errors(message_error="неизвестно"):
+def log_message(message_error="неизвестно"):
     with open("db_queries.log", "a", encoding="UTF8") as dbq_log:
         dbq_log.write(f'{datetime.datetime.now()} - {message_error}')
 
@@ -19,9 +19,9 @@ try:
         charset=param_db[4],
         cursorclass=pymysql.cursors.DictCursor
     )
-    log_errors("code-10: успешное подключение к БД\n")
+    log_message("code-10: успешное подключение к БД\n")
 except:
-    log_errors("code-40: не удалось подключиться к БД\n")
+    log_message("code-40: не удалось подключиться к БД\n")
 
 
 def link_shops_read_db(call_data='Мегамаркеты'):
@@ -45,10 +45,10 @@ def link_shops_read_db(call_data='Мегамаркеты'):
             """
             cursor.execute(sql_shops, call_data)
 
-        url = ', '.join([row['url'] for row in cursor])
+        url = f"Гляди что нашёл!\n\n<{'> <'.join([row['url'] for row in cursor])}>\n\nЗаглядывай еще, список периодически обновляется."
         return url
     except:
-        log_errors("code-43: неудачный запрос ссылок\n")
+        log_message("code-43: неудачный запрос ссылок\n")
 
 
 if __name__ == '__main__':
