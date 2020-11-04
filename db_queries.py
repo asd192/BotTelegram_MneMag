@@ -1,11 +1,18 @@
 ﻿import datetime
 import pymysql
+from os import remove
 
 
 def log_message(message_error="неизвестно"):
-    with open("messages.log", "a", encoding="UTF8") as dbq_log:
-        dbq_log.write(f'{datetime.datetime.now()} - {message_error}')
-
+    while True:
+        try:
+            with open("get_log.lock", "x"):
+                with open("messages.log", "a", encoding="UTF8") as dbq_log:
+                    dbq_log.write(f'{datetime.datetime.now()} - {message_error}')
+            remove("get_log.lock")
+            break
+        except FileExistsError:
+            continue
 
 try:
     with open("database_access.txt", "r", encoding="UTF8") as dt_acc:

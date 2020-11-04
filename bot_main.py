@@ -72,7 +72,7 @@ def get_menu_shops(message):
                 shop_list.clear()
         if len(shop_list) == 2:
             keyboard_shops.add(shop_list[0], shop_list[1])
-        else:
+        if len(shop_list) == 1:
             keyboard_shops.add(shop_list[0])
 
         # отправляем кнопки пользователю
