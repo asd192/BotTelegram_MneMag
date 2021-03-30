@@ -1,6 +1,7 @@
 ﻿import datetime
-import pymysql
 from os import remove
+
+import pymysql
 
 
 def log_message(message_error="неизвестно"):
@@ -13,6 +14,7 @@ def log_message(message_error="неизвестно"):
             break
         except FileExistsError:
             continue
+
 
 try:
     with open("database_access.txt", "r", encoding="UTF8") as dt_acc:
